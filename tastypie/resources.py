@@ -2,6 +2,7 @@ from __future__ import with_statement
 import logging
 import warnings
 import django
+from functools import wraps
 from django.conf import settings
 from django.conf.urls.defaults import patterns, url
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
@@ -189,6 +190,7 @@ class Resource(object):
         are seen, there is special handling to either present a message back
         to the user or return the response traveling with the exception.
         """
+        @wraps(view)
         @csrf_exempt
         def wrapper(request, *args, **kwargs):
             try:
